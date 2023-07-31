@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Displays "Best School" ten times in the terminal
+
+x=10
+until [ $x -eq 0 ]
+do
+    echo "Best School"
+    ((x--))
+done
