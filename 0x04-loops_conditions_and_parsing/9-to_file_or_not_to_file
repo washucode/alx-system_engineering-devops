@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 # gives information about the school file.
 
-if [ -e "school" ]
+if [ -e "school" ];
 then
     echo "school file exists"
 
     # -s checks if file is empty
-    if [ -s "school" ]
+    if [ ! -s "school" ];
     then
-        echo "school file is not empty"
+        echo "school file is empty"
 
-        if [ -f "school" ]
+        if [ -f "school" ];
         then
             echo "school file is a regular file"
         fi
     else
-        echo "school file is empty"
+        echo "school file is not empty"
 
-        if [ -f "school" ]
+        if [ -f "school" ];
         then
             echo "school file is a regular file"
         fi
