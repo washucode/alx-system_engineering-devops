@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# stops a process with a signal
+
+pkill -f 4-to_infinity_and_beyond
