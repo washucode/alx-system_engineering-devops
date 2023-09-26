@@ -1,0 +1,31 @@
+#!/bin/env bash
+
+# Install nginx web server
+
+sudo apt-get update
+sudo apt-get install -y nginx
+sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw enable
+
+echo "Hello World!" > /var/www/html/index.html
+echo "
+server {
+    listen 80;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html;
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+    location / {
+        error_page 404 /404.html;
+        location = /404.html {
+            root /usr/share/nginx/html;
+            internal;
+        }
+    }
+}" > /etc/nginx/sites-available/default
+
+sudo service nginx restart
