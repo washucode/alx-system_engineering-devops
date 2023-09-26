@@ -28,4 +28,6 @@ server {
     }
 }" > /etc/nginx/sites-available/default
 
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
 sudo service nginx restart
