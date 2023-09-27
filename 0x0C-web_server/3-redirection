@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # Redirects the domain to another domain
 sudo apt-get update
