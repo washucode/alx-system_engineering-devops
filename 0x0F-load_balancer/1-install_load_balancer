@@ -15,7 +15,8 @@ backend webservers
 "
 
 # Update
-sudo apt-get update
+sudo apt-get -y update
+sudo apt-get -y upgrade
 
 # HAProxy installation
 sudo apt-get install software-properties-common
@@ -24,7 +25,7 @@ sudo apt-get update
 
 # Install HAProxy
 sudo apt-get install -y haproxy
-cp -a /etc/haproxy/haproxy.cfg{,.original}
+sudo cp -a /etc/haproxy/haproxy.cfg{,.original}
 echo "$load_balancer" > /etc/haproxy/haproxy.cfg
 
 # Restart HAProxy
