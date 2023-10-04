@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Install nginx with:
+# - listens to port 80
+# - returns a custom header
+
+# Install nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# create file to add custom header
+mkdir -p /var/www/html
+touch /var/www/html/index.html
+echo "Hello World!" > /var/www/html/index.html
+
+# 404 error page
+touch /var/www/html/404.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# add custom header
+printf %s "
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    server_name localhost;
+
+    location / {
+        add_header X-Served-By $HOSTNAME;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+}" > /etc/nginx/sites-available/default
+
+# restart nginx
+sudo service nginx restart
