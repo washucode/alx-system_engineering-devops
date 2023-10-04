@@ -9,7 +9,7 @@ frontend haproxy_balancer
     default_backend webservers
 
 backend webservers
-    balance roundrobiin
+    balance roundrobin
     server 243845-web-01 52.87.153.255 check
     server 243845-web-02 54.85.142.216 check
 "
