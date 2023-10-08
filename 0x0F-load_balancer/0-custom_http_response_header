@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Install nginx with:
 # - listens to port 80
 # - returns a custom header
