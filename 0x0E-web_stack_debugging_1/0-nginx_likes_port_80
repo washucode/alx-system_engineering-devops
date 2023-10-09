@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Debugging script for nginx
+
+# configure nginx file
+cd /etc/nginx/sites-enabled/ || exit
+
+rm -f default;
+
+# create link
+ln -s ../sites-available/default default;
+
+# restart nginx
+service nginx restart
