@@ -1,45 +1,16 @@
 #!/usr/bin/env bash
 # Configure domain zone so that the subdomain www points to your load-balancer IP (lb-01)
 
-print_info(){
-    local domain
-    local subdomain
-    local r_type
-    local dest
-
-    domain="$1"
-    subdomain="$2"
-    r_type="$(dig +short -t CNAME "$subdomain.$domain" 2>/dev/null)"
-    dest="$(dig +short "$subdomain.$domain" | tr '\n' ' ')"
-
-    echo "The subdomain $subdomain is a $r_type record that points to $dest"
-}
-   
-# display info for default subdomain
-
-display_default(){
-    local domain="$1"
-    print_info "$domain" "www"
-    print_info "$domain" "lb-01"
-    print_info "$domain" "web-01"
-    print_info "$domain" "web-02"
+subdomaininfo () {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | tail -n 1 | sed -r "s/$1./$2/g" | sed -r "s/ /\t/g" | sed -r "s/\t/ /g" | awk '{ print "The subdomain " $1 " is a " $4 " record and points to "  $5 }'
 }
 
-# logic
-
-if [ "$#" -eq 0 ]; then
-    echo "Usage: $0 <domain> [subdomain]"
-    exit 1
-fi
-
-domain="$1"
-
-if [ "$#" -eq 1 ]; then
-    display_default "$domain"
-elif [ "$#" -eq 2 ]; then
-    subdomain="$2"
-    print_info "$domain" "$subdomain"
+if [ "$#" -eq 2 ]
+then
+    subdomaininfo "$2.$1" "$2"
 else
-    echo "Usage: $0 <domain> [subdomain]"
-    exit 1
+    subdomaininfo "www.$1" "www"
+    subdomaininfo "lb-01.$1" "lb-01"
+    subdomaininfo "web-01.$1" "web-01"
+    subdomaininfo "web-02.$1" "web-02"
 fi

@@ -6,12 +6,18 @@ load_balancer="\
 frontend haproxy_balancer
     bind *:80
     mode http
+    timeout client 30s
+    timeout connect 5s
+    timeout server 30s
     default_backend webservers
 
 backend webservers
     balance roundrobin
+    timeout client 30s
+    timeout connect 5s
+    timeout server 30s
     option forwardfor
-    server 243845-web-01 52.87.153.255 check
+    server 243845-web-01 35.175.130.253 check
     server 243845-web-02 54.85.142.216 check
 "
 
