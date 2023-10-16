@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Run nginx as nginx user
+# stop nginx
+sudo -u nginx service nginx stop
+# change user directive to nginx
+sed -i 's/user www-data;/user nginx;/' /etc/nginx/nginx.conf
+# change listen directive to 8080
+sed -i 's/listen 80;/listen 8080;/' /etc/nginx/sites-available/default
+# start nginx
+sudo -u nginx service nginx start
