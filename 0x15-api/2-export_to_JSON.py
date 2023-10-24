@@ -16,9 +16,14 @@ if __name__ == "__main__":
                                   params={"userId": employee_id}).json()
 
     with open("{}.json".format(employee_id), "w") as jsonfile:
+        json_report = {}
+        list_report = []
         for task in employee_todos:
-            task["task"] = task.pop("title")
-            task["completed"] = task.pop("completed")
-            task["username"] = employee_username
-            del task["id"]
-            json.dump(task, jsonfile)
+            user_report = {}
+            user_report["task"] = task.get("title")
+            user_report["completed"] = task.get("completed")
+            user_report["username"] = employee_username
+            list_report.append(user_report)
+            print(list_report)
+        json_report[employee_id] = list_report
+        json.dump(json_report, jsonfile)
